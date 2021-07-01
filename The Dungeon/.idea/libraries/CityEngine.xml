@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="CityEngine">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../../../../IN1007 - Java/CityEngine.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../IN1007 - Java/CityEngine.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
