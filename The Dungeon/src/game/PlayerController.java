@@ -50,10 +50,10 @@ public class PlayerController implements KeyListener, ActionListener {
                     } else {
                         sword = new DamageZone(player, swordLeft);
                     }
+                    sword.addSensorListener(new MonsterHit());
 
                     for (Monster monster : level.getMonsters()) {
                         System.out.println("Added Listener for " + monster);
-                        sword.addSensorListener(monster);
                     }
 
                     // This timer controls the attack mechanism so that you can't hold the attacking position
