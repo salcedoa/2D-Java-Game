@@ -10,10 +10,7 @@ import java.util.ArrayList;
 public class Level1 extends GameLevel implements ActionListener {
 
     private Timer timer;
-    private Skeleton skeleton1;
-    private Skeleton skeleton2;
-    private ArrayList<Monster> skeletons = new ArrayList<Monster>(){};
-    ;
+    private Skeleton skeleton;
 
     public Level1(Game game){
         super(game);
@@ -26,22 +23,15 @@ public class Level1 extends GameLevel implements ActionListener {
         createStaticBody(1,15, 20,3);      // right wall
 
         // Skeleton Spawn and adding them to an arrayList for sensors
-        skeleton1 = new Skeleton(this);
-        skeleton1.setPosition(new Vec2(10,2));
-        skeletons.add(skeleton1);
+        skeleton = new Skeleton(this);
+        skeleton.setPosition(new Vec2(10,2));
 
-        skeleton2 = new Skeleton(this);
-        skeleton2.setPosition(new Vec2(-10,2));
-        skeletons.add(skeleton2);
+        skeleton = new Skeleton(this);
+        skeleton.setPosition(new Vec2(-10,2));
 
         // Health Bag Spawner
         timer = new Timer(5000, this);
         timer.start();
-    }
-
-    @Override
-    public ArrayList<Monster> getMonsters() {
-        return skeletons;
     }
 
     @Override

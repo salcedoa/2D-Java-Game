@@ -3,10 +3,7 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-public abstract class GameLevel extends World implements ActionListener {
+public abstract class GameLevel extends World {
     private Player player;
     private PlayerController controller;
 
@@ -51,6 +48,4 @@ public abstract class GameLevel extends World implements ActionListener {
     public Player getPlayer(){
         return player;
     }
-
-    public abstract ArrayList<Monster> getMonsters();
 }

@@ -4,12 +4,14 @@ import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 public class Skeleton extends Monster{
+    // TODO: Add a timer that repeats regularly to make sure that skeletons who have the death() animation are destroyed
+
     private static final Shape skeletonShape = new BoxShape(0.5f,2.5f);
 
     // initializing BodyImage objects that will be used to change the skeleton's animations
     private static final BodyImage normal = new BodyImage("data/skeleton/walk.gif", 3.5f);
     private static final BodyImage death = new BodyImage("data/skeleton/broken.png", 3.5f);
-    private static AttachedImage currentAnimation;
+    private AttachedImage currentAnimation;
 
     private static final float WALKING_SPEED = 5;
 
@@ -43,16 +45,12 @@ public class Skeleton extends Monster{
         waypointX = level.getPlayer().getPosition().x;
         waypointY = level.getPlayer().getPosition().y;
         if (waypointX > getPosition().x) {
-            // TODO: Uncomment
-            //startWalking(WALKING_SPEED);
+            startWalking(WALKING_SPEED);
         } else if (waypointX < getPosition().x) {
-            // TODO: Uncomment
-            //startWalking(-WALKING_SPEED);
+            startWalking(-WALKING_SPEED);
         }
     }
 
     @Override
-    public void postStep(StepEvent stepEvent) {
-
-    }
+    public void postStep(StepEvent stepEvent) {}
 }

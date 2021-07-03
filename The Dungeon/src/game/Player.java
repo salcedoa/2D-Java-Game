@@ -96,6 +96,7 @@ public class Player extends Walker {
     }
 
     public static void takeDamage(Player player){
+        player.removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(player, hurt, 1.4f,0, new Vec2(-0.5f,0.9f));
     }
 }

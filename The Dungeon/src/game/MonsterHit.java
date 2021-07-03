@@ -14,15 +14,15 @@ public class MonsterHit implements SensorListener, ActionListener {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        System.out.println("This runs every time a Monster object touches a sensor");
+        // to be able to call the death() method on the Body it needs to be cast to class Monster
+        // otherwise, sensorEvent.getContactBody() will only return a Body object and not a Monster object
+        monster = (Monster) sensorEvent.getContactBody();
+
         if (sensorEvent.getSensor() instanceof DamageZone) {
-            // to be able to call the death() method on the Body it needs to be cast to class Monster
-            // otherwise, sensorEvent.getContactBody() will only return a Body object and not a Monster object
-            monster = (Monster) sensorEvent.getContactBody();
             monster.death();
             System.out.println("death() called for " + monster);
 
-            timer = new Timer(50, this);
+            timer = new Timer(90, this);
             timer.setRepeats(false);
             timer.start();
         }
@@ -34,8 +34,7 @@ public class MonsterHit implements SensorListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO: Uncomment
-        //monster.destroy();
+        monster.destroy();
         System.out.println(monster + " has been destroyed");
     }
 }

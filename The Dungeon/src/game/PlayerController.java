@@ -52,10 +52,6 @@ public class PlayerController implements KeyListener, ActionListener {
                     }
                     sword.addSensorListener(new MonsterHit());
 
-                    for (Monster monster : level.getMonsters()) {
-                        System.out.println("Added Listener for " + monster);
-                    }
-
                     // This timer controls the attack mechanism so that you can't hold the attacking position
                     // After 0.2 seconds, the player will return to idle stance
                     timer = new Timer(200, this);
