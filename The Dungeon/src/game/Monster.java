@@ -5,8 +5,9 @@ import org.jbox2d.common.Vec2;
 
 public abstract class Monster extends Walker implements CollisionListener, StepListener {
 
-    // All monsters need a normal walking and death animation
+    // All monsters need a walking, blocked and death animation
     public abstract void normal();
+    public abstract void blocked();
     public abstract void death();
 
     public Monster(GameLevel level, Shape shape) {

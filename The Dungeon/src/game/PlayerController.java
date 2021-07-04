@@ -18,7 +18,7 @@ public class PlayerController implements KeyListener, ActionListener {
     private Timer timer;
     private Player player;
     private DamageZone sword;
-    private GameLevel level;
+    private ShieldZone shield;
 
     private Boolean facingRight;
     private Boolean isAttacking;
@@ -27,7 +27,6 @@ public class PlayerController implements KeyListener, ActionListener {
     public PlayerController(GameLevel level, DamageZone weapon) {
         this.player = level.getPlayer();
         this.sword = weapon;
-        this.level = level;
         facingRight = true;
         isAttacking = false;
         isBlocking = false;
@@ -36,6 +35,10 @@ public class PlayerController implements KeyListener, ActionListener {
     // The 3rd parameter describes the distance away from the main body that the sensor will be
     private static final Shape swordRight = new BoxShape(0.5f,1, new Vec2(3,1));
     private static final Shape swordLeft = new BoxShape(0.5f,1, new Vec2(-3,1));
+
+    // The 3rd parameter describes the distance away from the main body that the sensor will be
+    private static final Shape shieldRight = new BoxShape(0.5f,0.5f, new Vec2(1.5f,0.4f));
+    private static final Shape shieldLeft = new BoxShape(0.5f,0.5f, new Vec2(-1.5f,0.4f));
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -50,7 +53,7 @@ public class PlayerController implements KeyListener, ActionListener {
                     } else {
                         sword = new DamageZone(player, swordLeft);
                     }
-                    sword.addSensorListener(new MonsterHit());
+                    sword.addSensorListener(new MonsterHit(player));
 
                     // This timer controls the attack mechanism so that you can't hold the attacking position
                     // After 0.2 seconds, the player will return to idle stance
@@ -86,6 +89,12 @@ public class PlayerController implements KeyListener, ActionListener {
             case KeyEvent.VK_DOWN:
                 isBlocking = true;
                 player.block(player);
+                if (facingRight) {
+                    shield = new ShieldZone(player, shieldRight);
+                } else {
+                    shield = new ShieldZone(player, shieldLeft);
+                }
+                shield.addSensorListener(new MonsterHit(player));
 
                 // This timer controls the blocking mechanism so that you can't hold the blocking position
                 // After 0.2 seconds, the player will return to idle stance
@@ -118,8 +127,13 @@ public class PlayerController implements KeyListener, ActionListener {
             player.idleAnimation(player);
             player.turn(player);
         }
-        sword.destroy();
-        isAttacking = false;
-        isBlocking = false;
+
+        if (isAttacking) {
+            sword.destroy();
+            isAttacking = false;
+        } else if (isBlocking) {
+            shield.destroy();
+            isBlocking = false;
+        }
     }
 }

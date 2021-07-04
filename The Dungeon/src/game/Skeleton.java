@@ -10,6 +10,7 @@ public class Skeleton extends Monster{
 
     // initializing BodyImage objects that will be used to change the skeleton's animations
     private static final BodyImage normal = new BodyImage("data/skeleton/walk.gif", 3.5f);
+    private static final BodyImage blocked = new BodyImage("data/skeleton/blocked.png", 3.5f);
     private static final BodyImage death = new BodyImage("data/skeleton/broken.png", 3.5f);
     private AttachedImage currentAnimation;
 
@@ -30,6 +31,12 @@ public class Skeleton extends Monster{
     public void normal() {
         removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(this, normal,1.4f,0,new Vec2(0, 0));
+    }
+
+    @Override
+    public void blocked() {
+        removeAttachedImage(currentAnimation);
+        currentAnimation = new AttachedImage(this, blocked,1.4f,0,new Vec2(0, 0));
     }
 
     // death animation

@@ -4,10 +4,10 @@ import city.cs.engine.Body;
 import city.cs.engine.Sensor;
 import city.cs.engine.Shape;
 
-public class DamageZone extends Sensor {
+public class ShieldZone extends Sensor{
     private Monster monster;
 
-    public DamageZone(Body body, Shape position) {
-        super(body, position);
+    public ShieldZone(Body body, Shape shape) {
+        super(body, shape);
     }
 }
