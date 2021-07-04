@@ -5,17 +5,18 @@ import org.jbox2d.common.Vec2;
 
 public abstract class GameLevel extends World {
     private Player player;
-    private PlayerController controller;
 
     // variable to control the bag spawn system
     private Boolean bagSpawned;
-
     public Boolean getBagSpawned() {
         return bagSpawned;
     }
     public void setBagSpawned(Boolean bagSpawned) {
         this.bagSpawned = bagSpawned;
     }
+
+    public int maxMonsters;
+    public int currentMonsters;
 
     public GameLevel (Game game){
         player = new Player(this);
@@ -43,6 +44,15 @@ public abstract class GameLevel extends World {
         int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
         int y = (int)Math.floor(Math.random()*(yMax+1));
         HealthBag bag = new HealthBag(this, x, y);
+    }
+
+    public void spawnMonster() {
+        int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
+        int y = (int)Math.floor(Math.random()*(yMax+1));
+        if (Game.levelNumber == 1) {
+            Skeleton skeleton = new Skeleton(this);
+            skeleton.setPosition(new Vec2(x, y));
+        } // TODO: Add spawn instructions for other monsters
     }
 
     public Player getPlayer(){

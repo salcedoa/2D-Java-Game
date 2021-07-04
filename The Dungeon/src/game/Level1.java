@@ -5,7 +5,6 @@ import org.jbox2d.common.Vec2;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-import java.util.ArrayList;
 
 public class Level1 extends GameLevel implements ActionListener {
 
@@ -14,6 +13,8 @@ public class Level1 extends GameLevel implements ActionListener {
 
     public Level1(Game game){
         super(game);
+        Game.levelNumber = 1;
+        maxMonsters = 2;
         getPlayer().setPosition(new Vec2(-5,-1.5f));
         getPlayer().setHealth(0);
 
@@ -22,12 +23,14 @@ public class Level1 extends GameLevel implements ActionListener {
         createStaticBody(1,15, -20,3);     // left wall
         createStaticBody(1,15, 20,3);      // right wall
 
-        // Skeleton Spawn and adding them to an arrayList for sensors
+        // Skeletons Spawn
         skeleton = new Skeleton(this);
         skeleton.setPosition(new Vec2(10,2));
 
         skeleton = new Skeleton(this);
         skeleton.setPosition(new Vec2(-10,2));
+
+        currentMonsters = 2;
 
         // Health Bag Spawner
         timer = new Timer(5000, this);
@@ -39,6 +42,5 @@ public class Level1 extends GameLevel implements ActionListener {
         if (getPlayer().getHealth() <= 40 && !getBagSpawned()) {
             spawnHealthBag();
         }
-        System.out.println("Health: " + getPlayer().getHealth());
     }
 }

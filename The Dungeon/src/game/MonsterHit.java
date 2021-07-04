@@ -12,11 +12,14 @@ public class MonsterHit implements SensorListener, ActionListener {
 
     private Monster monster;
     private Player player;
+    private GameLevel level;
     private Timer timer;
+
     private Boolean hitBySword;
 
-    public MonsterHit(Player player) {
-        this.player = player;
+    public MonsterHit(GameLevel level) {
+        this.level = level;
+        this.player = level.getPlayer();
     }
 
     @Override
@@ -45,8 +48,8 @@ public class MonsterHit implements SensorListener, ActionListener {
                     direction = -1.0f;
                 }
 
+                // knockback effect
                 monster.setLinearVelocity(new Vec2(direction * 20, 10));
-                System.out.println(monster.getLinearVelocity());
 
                 timer = new Timer(150, this);
                 timer.setRepeats(false);
@@ -62,6 +65,10 @@ public class MonsterHit implements SensorListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (hitBySword) {
             monster.destroy();
+            level.currentMonsters--;
+            if (level.currentMonsters <= level.maxMonsters) {
+                level.spawnMonster();
+            }
         } else {
             monster.normal();
         }

@@ -17,6 +17,7 @@ public class PlayerController implements KeyListener, ActionListener {
     private static final float WALKING_SPEED = 7;
     private Timer timer;
     private Player player;
+    private GameLevel level;
     private DamageZone sword;
     private ShieldZone shield;
 
@@ -25,6 +26,7 @@ public class PlayerController implements KeyListener, ActionListener {
     private Boolean isBlocking;
 
     public PlayerController(GameLevel level, DamageZone weapon) {
+        this.level = level;
         this.player = level.getPlayer();
         this.sword = weapon;
         facingRight = true;
@@ -53,7 +55,7 @@ public class PlayerController implements KeyListener, ActionListener {
                     } else {
                         sword = new DamageZone(player, swordLeft);
                     }
-                    sword.addSensorListener(new MonsterHit(player));
+                    sword.addSensorListener(new MonsterHit(level));
 
                     // This timer controls the attack mechanism so that you can't hold the attacking position
                     // After 0.2 seconds, the player will return to idle stance
@@ -94,7 +96,7 @@ public class PlayerController implements KeyListener, ActionListener {
                 } else {
                     shield = new ShieldZone(player, shieldLeft);
                 }
-                shield.addSensorListener(new MonsterHit(player));
+                shield.addSensorListener(new MonsterHit(level));
 
                 // This timer controls the blocking mechanism so that you can't hold the blocking position
                 // After 0.2 seconds, the player will return to idle stance

@@ -55,6 +55,7 @@ public class Skeleton extends Monster{
     public void death() {
         removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(this, death, 1.4f,0, new Vec2(0, 0));
+        dead = true;
     }
 
     @Override

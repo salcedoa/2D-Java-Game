@@ -6,6 +6,7 @@ import javax.swing.*;
 
 public class Game extends World {
     private GameLevel currentLevel;
+    public static int levelNumber;
     private GameView view;
 
     private PlayerController controller;
