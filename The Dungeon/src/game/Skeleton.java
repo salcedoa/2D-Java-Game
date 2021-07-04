@@ -6,6 +6,10 @@ import org.jbox2d.common.Vec2;
 public class Skeleton extends Monster{
     // TODO: Add a timer that repeats regularly to make sure that skeletons who have the death() animation are destroyed
 
+    private enum State {
+        STAND_STILL, ATTACK, GO_UP, GO_DOWN
+    }
+
     private static final Shape skeletonShape = new BoxShape(0.5f,2.5f);
 
     // initializing BodyImage objects that will be used to change the skeleton's animations
@@ -13,6 +17,9 @@ public class Skeleton extends Monster{
     private static final BodyImage blocked = new BodyImage("data/skeleton/blocked.png", 3.5f);
     private static final BodyImage death = new BodyImage("data/skeleton/broken.png", 3.5f);
     private AttachedImage currentAnimation;
+
+    private State state;
+    private Boolean hit;
 
     private static final float WALKING_SPEED = 5;
 
@@ -24,6 +31,8 @@ public class Skeleton extends Monster{
     public Skeleton(GameLevel level) {
         super(level, skeletonShape);
         setGravityScale(2);
+        state = State.ATTACK;
+        hit = false;
         this.level = level;
     }
 
@@ -31,12 +40,14 @@ public class Skeleton extends Monster{
     public void normal() {
         removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(this, normal,1.4f,0,new Vec2(0, 0));
+        hit = false;
     }
 
     @Override
     public void blocked() {
         removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(this, blocked,1.4f,0,new Vec2(0, 0));
+        hit = true;
     }
 
     // death animation
@@ -48,13 +59,32 @@ public class Skeleton extends Monster{
 
     @Override
     public void preStep(StepEvent stepEvent) {
-        // Waypoints denote the player's position for pathfinding
-        waypointX = level.getPlayer().getPosition().x;
-        waypointY = level.getPlayer().getPosition().y;
-        if (waypointX > getPosition().x) {
-            startWalking(WALKING_SPEED);
-        } else if (waypointX < getPosition().x) {
-            startWalking(-WALKING_SPEED);
+        // update state
+        if (hit && state != State.STAND_STILL) {
+            state = State.STAND_STILL;
+        } else {
+            if (state != State.ATTACK) {
+                state = State.ATTACK;
+            }
+        }
+        updateBehaviour();
+    }
+
+    // update what actions the skeleton will take
+    private void updateBehaviour() {
+        switch (state) {
+            case ATTACK:
+                // Waypoints denote the player's position for pathfinding
+                waypointX = level.getPlayer().getPosition().x;
+                waypointY = level.getPlayer().getPosition().y;
+                if (waypointX > getPosition().x) {
+                    startWalking(WALKING_SPEED);
+                } else if (waypointX < getPosition().x) {
+                    startWalking(-WALKING_SPEED);
+                }
+                break;
+            case STAND_STILL:
+                stopWalking();
         }
     }
 

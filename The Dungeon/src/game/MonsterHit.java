@@ -44,7 +44,7 @@ public class MonsterHit implements SensorListener, ActionListener {
                 } else {
                     direction = -1.0f;
                 }
-                
+
                 monster.setLinearVelocity(new Vec2(direction * 20, 10));
                 System.out.println(monster.getLinearVelocity());
 
