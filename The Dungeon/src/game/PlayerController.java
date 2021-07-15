@@ -18,17 +18,16 @@ public class PlayerController implements KeyListener, ActionListener {
     private Timer timer;
     private Player player;
     private GameLevel level;
-    private DamageZone sword;
-    private ShieldZone shield;
+    private Player.DamageZone sword;
+    private Player.ShieldZone shield;
 
     private Boolean facingRight;
     private Boolean isAttacking;
     private Boolean isBlocking;
 
-    public PlayerController(GameLevel level, DamageZone weapon) {
+    public PlayerController(GameLevel level) {
         this.level = level;
         this.player = level.getPlayer();
-        this.sword = weapon;
         facingRight = true;
         isAttacking = false;
         isBlocking = false;
@@ -51,9 +50,9 @@ public class PlayerController implements KeyListener, ActionListener {
                     isAttacking = true;
                     player.attack1(player);
                     if (facingRight) {
-                        sword = new DamageZone(player, swordRight);
+                        sword = player.new DamageZone(swordRight);
                     } else {
-                        sword = new DamageZone(player, swordLeft);
+                        sword = player.new DamageZone(swordLeft);
                     }
                     sword.addSensorListener(new MonsterHit(level));
 
@@ -92,9 +91,9 @@ public class PlayerController implements KeyListener, ActionListener {
                 isBlocking = true;
                 player.block(player);
                 if (facingRight) {
-                    shield = new ShieldZone(player, shieldRight);
+                    shield = player.new ShieldZone(shieldRight);
                 } else {
-                    shield = new ShieldZone(player, shieldLeft);
+                    shield = player.new ShieldZone(shieldLeft);
                 }
                 shield.addSensorListener(new MonsterHit(level));
 

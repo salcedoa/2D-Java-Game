@@ -11,8 +11,6 @@ public class Game extends World {
 
     private PlayerController controller;
 
-    private DamageZone sword;
-
     public Game() {
         startGame();
     }
@@ -21,7 +19,7 @@ public class Game extends World {
 
     public void startGame() {
         currentLevel = new Level1(this);
-        controller = new PlayerController(currentLevel, sword);
+        controller = new PlayerController(currentLevel);
 
         view = new GameView(currentLevel);
         view.addMouseListener(new GiveFocus(view)); // using the GiveFocus class
@@ -39,9 +37,5 @@ public class Game extends World {
 
     public static void main(String[] args) {
         new Game();
-    }
-
-    public DamageZone getSword() {
-        return sword;
     }
 }

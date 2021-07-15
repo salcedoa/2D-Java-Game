@@ -29,14 +29,14 @@ public class MonsterHit implements SensorListener, ActionListener {
             // otherwise, sensorEvent.getContactBody() will only return a Body object and not a Monster object
             monster = (Monster) sensorEvent.getContactBody();
 
-            if (sensorEvent.getSensor() instanceof DamageZone) {
+            if (sensorEvent.getSensor() instanceof Player.DamageZone) {
                 monster.death();
                 hitBySword = true;
 
                 timer = new Timer(90, this);
                 timer.setRepeats(false);
                 timer.start();
-            } else if (sensorEvent.getSensor() instanceof ShieldZone) {
+            } else if (sensorEvent.getSensor() instanceof Player.ShieldZone) {
                 monster.blocked();
                 hitBySword = false;
 

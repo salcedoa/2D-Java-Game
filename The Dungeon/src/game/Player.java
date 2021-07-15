@@ -42,7 +42,7 @@ public class Player extends Walker {
     }
 
 
-    // ANIMATION METHODS
+    /** ANIMATION METHODS */
 
     // accessor method to control flipped images in BagPickup() events
     public static AttachedImage getCurrentAnimation() {
@@ -99,4 +99,21 @@ public class Player extends Walker {
         player.removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(player, hurt, 1.4f,0, new Vec2(-0.5f,0.9f));
     }
+
+
+    /** INNER CLASSES - SENSORS */
+
+    public class ShieldZone extends Sensor{
+        private Monster monster;
+        public ShieldZone(Shape shape) {
+            super(Player.this, shape);
+        }
+    }
+
+    public class DamageZone extends Sensor {
+        public DamageZone(Shape position) {
+            super(Player.this, position);
+        }
+    }
+
 }

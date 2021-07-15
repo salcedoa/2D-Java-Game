@@ -4,7 +4,6 @@ import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 public class Skeleton extends Monster{
-    // TODO: Add a timer that repeats regularly to make sure that skeletons who have the death() animation are destroyed
 
     private enum State {
         STAND_STILL, ATTACK, GO_UP, GO_DOWN
