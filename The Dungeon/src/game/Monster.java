@@ -54,7 +54,7 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (dead || level.getCurrentMonsters() > level.maxMonsters) {
+        if (dead) {
             die();
             timer.stop();
         }
