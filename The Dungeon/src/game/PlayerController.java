@@ -46,7 +46,7 @@ public class PlayerController implements KeyListener, ActionListener {
         char code = e.getKeyChar();
         switch (code) {
             case ' ':
-                if (isAttacking == false) {
+                if (!isAttacking) {
                     isAttacking = true;
                     player.attack1(player);
                     if (facingRight) {
@@ -88,21 +88,22 @@ public class PlayerController implements KeyListener, ActionListener {
                 player.jump(18);
                 break;
             case KeyEvent.VK_DOWN:
-                isBlocking = true;
-                player.block(player);
-                if (facingRight) {
-                    shield = player.new ShieldZone(shieldRight);
-                } else {
-                    shield = player.new ShieldZone(shieldLeft);
+                if (!isBlocking) {
+                    isBlocking = true;
+                    player.block(player);
+                    if (facingRight) {
+                        shield = player.new ShieldZone(shieldRight);
+                    } else {
+                        shield = player.new ShieldZone(shieldLeft);
+                    }
+                    shield.addSensorListener(new MonsterHit(level));
+
+                    // This timer controls the blocking mechanism so that you can't hold the blocking position
+                    // After 0.2 seconds, the player will return to idle stance
+                    timer = new Timer(200, this);
+                    timer.setRepeats(false);
+                    timer.start();
                 }
-                shield.addSensorListener(new MonsterHit(level));
-
-                // This timer controls the blocking mechanism so that you can't hold the blocking position
-                // After 0.2 seconds, the player will return to idle stance
-                timer = new Timer(200, this);
-                timer.setRepeats(false);
-                timer.start();
-
                 break;
         }
     }

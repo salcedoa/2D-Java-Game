@@ -38,7 +38,6 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
     public void die() {
         destroy();
         level.getMonsters().remove(this);
-        System.out.println(level.getMonsters().size());
     }
 
     @Override
