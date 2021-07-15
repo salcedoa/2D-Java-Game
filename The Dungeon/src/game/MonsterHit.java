@@ -65,7 +65,7 @@ public class MonsterHit implements SensorListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (hitBySword) {
             monster.die();
-            if (level.getCurrentMonsters() <= level.maxMonsters) {
+            if (level.getMonsters().size() <= level.maxMonsters) {
                 level.spawnMonster();
             }
         } else {

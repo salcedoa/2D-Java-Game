@@ -3,6 +3,8 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import java.util.ArrayList;
+
 public abstract class GameLevel extends World {
     private Player player;
 
@@ -16,12 +18,9 @@ public abstract class GameLevel extends World {
     }
 
     protected int maxMonsters;
-    private int currentMonsters;
-    public int getCurrentMonsters() {
-        return currentMonsters;
-    }
-    public void changeCurrentMonsters(int value) {
-        currentMonsters += value;
+    private ArrayList<Monster> monsters = new ArrayList<Monster>();
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
     }
 
 
@@ -54,13 +53,12 @@ public abstract class GameLevel extends World {
     }
 
     public void spawnMonster() {
-        currentMonsters++;
-        System.out.println("[GameLevel:57] added 1 so there are " + currentMonsters);
         int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
         int y = (int)Math.floor(Math.random()*(yMax+1));
         if (Game.levelNumber == 1) {
             Skeleton skeleton = new Skeleton(this);
             skeleton.setPosition(new Vec2(x, y));
+            monsters.add(skeleton);
         } // TODO: Add spawn instructions for other monsters
     }
 
