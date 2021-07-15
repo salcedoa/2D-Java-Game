@@ -64,9 +64,8 @@ public class MonsterHit implements SensorListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (hitBySword) {
-            monster.destroy();
-            level.currentMonsters--;
-            if (level.currentMonsters <= level.maxMonsters) {
+            monster.die();
+            if (level.getCurrentMonsters() <= level.maxMonsters) {
                 level.spawnMonster();
             }
         } else {

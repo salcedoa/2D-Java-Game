@@ -24,13 +24,8 @@ public class Level1 extends GameLevel implements ActionListener {
         createStaticBody(1,15, 20,3);      // right wall
 
         // Skeletons Spawn
-        skeleton = new Skeleton(this);
-        skeleton.setPosition(new Vec2(10,2));
-
-        skeleton = new Skeleton(this);
-        skeleton.setPosition(new Vec2(-10,2));
-
-        currentMonsters = 2;
+        spawnMonster();
+        spawnMonster();
 
         // Health Bag Spawner
         timer = new Timer(5000, this);

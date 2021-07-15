@@ -15,8 +15,15 @@ public abstract class GameLevel extends World {
         this.bagSpawned = bagSpawned;
     }
 
-    public int maxMonsters;
-    public int currentMonsters;
+    protected int maxMonsters;
+    private int currentMonsters;
+    public int getCurrentMonsters() {
+        return currentMonsters;
+    }
+    public void changeCurrentMonsters(int value) {
+        currentMonsters += value;
+    }
+
 
     public GameLevel (Game game){
         player = new Player(this);
@@ -47,6 +54,8 @@ public abstract class GameLevel extends World {
     }
 
     public void spawnMonster() {
+        currentMonsters++;
+        System.out.println("[GameLevel:57] added 1 so there are " + currentMonsters);
         int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
         int y = (int)Math.floor(Math.random()*(yMax+1));
         if (Game.levelNumber == 1) {

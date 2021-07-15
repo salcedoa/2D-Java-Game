@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public abstract class Monster extends Walker implements CollisionListener, StepListener, ActionListener {
 
     private Player player;
+    private GameLevel level;
     private Timer timer;
     protected Boolean dead;
 
@@ -20,15 +21,24 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
 
     public Monster(GameLevel level, Shape shape) {
         super(level, shape);
+        this.level = level;
+        //level.changeCurrentMonsters(1);
+
         normal();
         dead = false;
         level.addStepListener(this);
         addCollisionListener(this);
 
         // this timer will check if there are any monsters that haven't despawned after getting hit
-        timer = new Timer(500, this);
+        timer = new Timer(450, this);
         timer.setRepeats(true);
         timer.start();
+    }
+
+    public void die() {
+        level.changeCurrentMonsters(-1);
+        destroy();
+        System.out.println("[Monster:40] subbed 1 so there are " + level.getCurrentMonsters());
     }
 
     @Override
@@ -44,8 +54,9 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (dead) {
-            destroy();
+        if (dead || level.getCurrentMonsters() > level.maxMonsters) {
+            die();
+            timer.stop();
         }
     }
 }
