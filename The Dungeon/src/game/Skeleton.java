@@ -3,13 +3,15 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import java.lang.Math;
+
 public class Skeleton extends Monster{
 
     private enum State {
         STAND_STILL, ATTACK, GO_UP, GO_DOWN
     }
 
-    private static final Shape skeletonShape = new BoxShape(0.5f,2.5f);
+    private static final Shape skeletonShape = new BoxShape(0.8f,2.5f);
 
     // initializing BodyImage objects that will be used to change the skeleton's animations
     private static final BodyImage normal = new BodyImage("data/skeleton/walk.gif", 3.5f);
@@ -70,21 +72,28 @@ public class Skeleton extends Monster{
         updateBehaviour();
     }
 
-    // update what actions the skeleton will take
+    // update and define what actions the skeleton will take
+    private float distanceToPlayer;
+
     private void updateBehaviour() {
         switch (state) {
             case ATTACK:
                 // Waypoints denote the player's position for pathfinding
                 waypointX = level.getPlayer().getPosition().x;
                 waypointY = level.getPlayer().getPosition().y;
-                if (waypointX > getPosition().x) {
+                distanceToPlayer = Math.abs(waypointX - getPosition().x);
+
+                if (waypointX > getPosition().x && distanceToPlayer > 3f) {
                     startWalking(WALKING_SPEED);
-                } else if (waypointX < getPosition().x) {
+                } else if (waypointX < getPosition().x && distanceToPlayer > 3f) {
                     startWalking(-WALKING_SPEED);
+                } else {
+                    stopWalking();
                 }
                 break;
             case STAND_STILL:
                 stopWalking();
+                break;
         }
     }
 
