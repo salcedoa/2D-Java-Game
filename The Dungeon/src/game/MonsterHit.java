@@ -8,6 +8,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/** This class handles what will happen if an enemy is hit with a sword or shield **/
 public class MonsterHit implements SensorListener, ActionListener {
 
     private Monster monster;
@@ -48,7 +49,7 @@ public class MonsterHit implements SensorListener, ActionListener {
                     direction = -1.0f;
                 }
 
-                // knockback effect
+                // knockback effect done by imposing a vector on the monster
                 monster.setLinearVelocity(new Vec2(direction * 20, 10));
 
                 timer = new Timer(150, this);

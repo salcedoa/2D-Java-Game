@@ -5,7 +5,7 @@ import org.jbox2d.common.Vec2;
 
 import java.lang.Math;
 
-public class Skeleton extends Monster{
+public class Skeleton extends Monster {
 
     private enum State {
         STAND_STILL, ATTACK, GO_UP, GO_DOWN
@@ -26,6 +26,8 @@ public class Skeleton extends Monster{
 
     private float waypointX;
     private float waypointY;
+    private float XdistanceToPlayer;
+    private float YdistanceToPlayer;
 
     private GameLevel level;
 
@@ -61,31 +63,33 @@ public class Skeleton extends Monster{
 
     @Override
     public void preStep(StepEvent stepEvent) {
+        // Waypoints denote the player's position (for pathfinding)
+        waypointX = level.getPlayer().getPosition().x;
+        waypointY = level.getPlayer().getPosition().y;
+        XdistanceToPlayer = Math.abs(waypointX - getPosition().x);
+        YdistanceToPlayer = Math.abs(waypointY - getPosition().y);
+
         // update state
         if (hit && state != State.STAND_STILL) {
             state = State.STAND_STILL;
         } else {
-            if (state != State.ATTACK) {
+            if (getPosition().y < waypointY && YdistanceToPlayer > 3f) {
+                state = State.GO_UP;
+            } else if (getPosition().y > waypointY && YdistanceToPlayer > 3f) {
+                state = State.GO_DOWN;
+            } else if (state != State.ATTACK) {
                 state = State.ATTACK;
             }
         }
         updateBehaviour();
     }
 
-    // update and define what actions the skeleton will take
-    private float distanceToPlayer;
-
     private void updateBehaviour() {
         switch (state) {
             case ATTACK:
-                // Waypoints denote the player's position for pathfinding
-                waypointX = level.getPlayer().getPosition().x;
-                waypointY = level.getPlayer().getPosition().y;
-                distanceToPlayer = Math.abs(waypointX - getPosition().x);
-
-                if (waypointX > getPosition().x && distanceToPlayer > 3f) {
+                if (waypointX > getPosition().x && XdistanceToPlayer > 3f) {
                     startWalking(WALKING_SPEED);
-                } else if (waypointX < getPosition().x && distanceToPlayer > 3f) {
+                } else if (waypointX < getPosition().x && XdistanceToPlayer > 3f) {
                     startWalking(-WALKING_SPEED);
                 } else {
                     stopWalking();
@@ -93,6 +97,17 @@ public class Skeleton extends Monster{
                 break;
             case STAND_STILL:
                 stopWalking();
+                break;
+            case GO_UP:
+                // 0<x<2.5 is the area in front of the platform on level 1
+                if (getPosition().x < 0) { startWalking(WALKING_SPEED); }
+                else if (getPosition().x > 2.5) { startWalking(-WALKING_SPEED); }
+                else { jump(19); }
+                break;
+            case GO_DOWN:
+                // Just walk towards X:0
+                if (getPosition().x < 0) { startWalking(WALKING_SPEED); }
+                else { startWalking(-WALKING_SPEED); }
                 break;
         }
     }

@@ -44,17 +44,18 @@ public abstract class GameLevel extends World {
     // method for spawning the health bags at random locations
     private int xMax = 18;
     private int xMin = -18;
-    private int yMax = 20;
+    private int yMax = 15;
+    private int yMin = -9;
     public void spawnHealthBag() {
         bagSpawned = true;
         int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
-        int y = (int)Math.floor(Math.random()*(yMax+1));
+        int y = (int)Math.floor(Math.random()*(yMax-yMin+1)+yMin);
         HealthBag bag = new HealthBag(this, x, y);
     }
 
     public void spawnMonster() {
         int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
-        int y = (int)Math.floor(Math.random()*(yMax+1));
+        int y = (int)Math.floor(Math.random()*(yMax-yMin+1)+yMin);
         if (Game.levelNumber == 1) {
             Skeleton skeleton = new Skeleton(this);
             skeleton.setPosition(new Vec2(x, y));

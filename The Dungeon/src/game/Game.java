@@ -26,6 +26,7 @@ public class Game extends World {
         view.addKeyListener(controller);
         JFrame frame = new JFrame("The Dungeon");    // a new window that will be used to look at the game world is created
         frame.add(view);
+        //frame.setGridResolution(1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setResizable(false);
