@@ -13,6 +13,7 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
     private GameLevel level;
     private Timer timer;
     protected Boolean dead;
+    private float directionVec;
 
     // All monsters need a walking, blocked and death animation
     public abstract void normal();
@@ -42,12 +43,16 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
 
     @Override
     public void collide(CollisionEvent event) {
+        directionVec = event.getNormal().x;
         if (event.getOtherBody() instanceof Player) {
             player = (Player) event.getOtherBody();
             player.stopWalking(); // to not have the player push against the knockback
             // event.getOtherBody.addHealth(-10);
-            float directionVec = event.getNormal().x;
             player.setLinearVelocity(new Vec2(directionVec * 10,8));
+        } else if (event.getOtherBody() instanceof Monster) {
+            // slight knockback effect to reduce the chance of the monsters blocking eachother's movement
+            ((Monster) event.getOtherBody()).stopWalking();
+            ((Monster) event.getOtherBody()).setLinearVelocity(new Vec2(directionVec * 10, 0));
         }
     }
 
