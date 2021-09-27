@@ -9,12 +9,14 @@ import javax.swing.Timer;
 public class Level1 extends GameLevel implements ActionListener {
 
     private Timer timer;
+    private Timer timer2;
     private Skeleton skeleton;
 
     public Level1(Game game){
         super(game);
         Game.levelNumber = 1;
         maxMonsters = 2;
+        setWinningScore(50); // one enemy = 2
         getPlayer().setPosition(new Vec2(-5,-1.5f));
         getPlayer().setHealth(0);
 
@@ -30,12 +32,23 @@ public class Level1 extends GameLevel implements ActionListener {
         // Health Bag Spawner
         timer = new Timer(5000, this);
         timer.start();
+
+        // Checks if the winning conditions of the level are satisfied
+        timer2 = new Timer(1000, this);
+        timer2.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (getPlayer().getHealth() <= 40 && !getBagSpawned()) {
-            spawnHealthBag();
+        if (e.getSource() == timer) {
+            if (getPlayer().getHealth() <= 40 && !getBagSpawned()) {
+                spawnHealthBag();
+            }
+        } else if (e.getSource() == timer2) {
+            if (getLevelScore() >= getWinningScore()) {
+                spawnDoor();
+                timer2.stop();
+            }
         }
     }
 }

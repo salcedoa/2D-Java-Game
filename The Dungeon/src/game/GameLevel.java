@@ -8,6 +8,14 @@ import java.util.ArrayList;
 public abstract class GameLevel extends World {
     private Player player;
 
+    private int levelScore;
+    public int getLevelScore() { return levelScore; }
+    public void setLevelScore(int levelScore) { this.levelScore = levelScore; }
+
+    private int winningScore;
+    public int getWinningScore() { return winningScore; }
+    public void setWinningScore(int winningScore) { this.winningScore = winningScore; }
+
     // variable to control the bag spawn system
     private Boolean bagSpawned;
     public Boolean getBagSpawned() {
@@ -26,7 +34,7 @@ public abstract class GameLevel extends World {
 
     public GameLevel (Game game){
         player = new Player(this);
-
+        levelScore = 0;
         bagSpawned = false;
         BagPickup pickup = new BagPickup(player, this);
         player.addCollisionListener(pickup);
@@ -54,13 +62,23 @@ public abstract class GameLevel extends World {
     }
 
     public void spawnMonster() {
-        int x = (int)Math.floor(Math.random()*(xMax-xMin+1)+xMin);
-        int y = (int)Math.floor(Math.random()*(yMax-yMin+1)+yMin);
+        if (levelScore <= winningScore) {
+            int x = (int) Math.floor(Math.random() * (xMax - xMin + 1) + xMin);
+            int y = (int) Math.floor(Math.random() * (yMax - yMin + 1) + yMin);
+            if (Game.levelNumber == 1) {
+                Skeleton skeleton = new Skeleton(this);
+                skeleton.setPosition(new Vec2(x, y));
+                monsters.add(skeleton);
+            } // TODO: Add spawn instructions for other monsters
+        }
+    }
+
+    public void spawnDoor() {
+        System.out.println("Door Spawned!");
         if (Game.levelNumber == 1) {
-            Skeleton skeleton = new Skeleton(this);
-            skeleton.setPosition(new Vec2(x, y));
-            monsters.add(skeleton);
-        } // TODO: Add spawn instructions for other monsters
+            Door door = new Door(this);
+            door.setPosition(new Vec2(16.5f,3));
+        } // TODO: Add door spawn points for each level
     }
 
     public Player getPlayer(){

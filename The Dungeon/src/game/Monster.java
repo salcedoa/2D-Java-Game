@@ -37,8 +37,13 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
     }
 
     public void die() {
+        // increase kill count by 1
+        level.setLevelScore(level.getLevelScore() + 1);
+
         destroy();
         level.getMonsters().remove(this);
+
+        System.out.println(level.getLevelScore());//////////
     }
 
     @Override
@@ -58,7 +63,8 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (dead) {
+        // checks if there are any monsters that shouldn't be spawned and gets rid of them
+        if (dead || level.getLevelScore() >= level.getWinningScore()) {
             die();
             timer.stop();
         }
