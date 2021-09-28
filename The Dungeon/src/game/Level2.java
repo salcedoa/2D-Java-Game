@@ -2,35 +2,29 @@ package game;
 
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
 
-public class Level1 extends GameLevel implements ActionListener {
+public class Level2 extends GameLevel implements ActionListener {
 
     private Timer timer;
     private Timer timer2;
-    private Skeleton skeleton;
 
-    public Level1(Game game){
+    public Level2(Game game) {
         super(game);
-        Game.levelNumber = 1;
+        Game.levelNumber = 2; // TODO: Refactor levelNumber to just use currentLevel
         maxMonsters = 2;
         setWinningScore(50); // one enemy = 2
         getPlayer().setPosition(new Vec2(-5,-1.5f));
         getPlayer().setHealth(50);
 
         createStaticBody(30,4,0,-11);      // ground
-        createStaticBody(9,0.5f,13,-0.5f); // side platform
         createStaticBody(1,15, -20,3);     // left wall
         createStaticBody(1,15, 20,3);      // right wall
 
-        // Skeletons Spawn
-        spawnMonster();
-        spawnMonster();
-
         // Health Bag Spawner
-        timer = new Timer(5000, this);
+        timer = new Timer(7500, this);
         timer.start();
 
         // Checks if the winning conditions of the level are satisfied
@@ -41,7 +35,7 @@ public class Level1 extends GameLevel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
-            if (getPlayer().getHealth() <= 40 && !getBagSpawned()) {
+            if (getPlayer().getHealth() <= 30 && !getBagSpawned()) {
                 spawnHealthBag();
             }
         } else if (e.getSource() == timer2) {

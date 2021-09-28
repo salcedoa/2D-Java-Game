@@ -38,7 +38,8 @@ public abstract class GameLevel extends World {
         bagSpawned = false;
         BagPickup pickup = new BagPickup(player, this);
         player.addCollisionListener(pickup);
-
+        Door.DoorEncounter enterDoor = new Door.DoorEncounter(game);
+        player.addCollisionListener(enterDoor);
     }
 
     // method that handles the creation of static bodies such as platforms

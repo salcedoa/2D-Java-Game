@@ -14,7 +14,18 @@ public class GameView extends UserView {
 
         // DEBUG VIEW - overrides normal view
         JFrame debugView = new DebugViewer(w, 800, 500);
+
         background = new ImageIcon("data/dungeon.png").getImage();
+    }
+
+    public void updateBackground() {
+        if (Game.levelNumber == 1) {
+            background = new ImageIcon("data/dungeon.png").getImage();
+        } else if (Game.levelNumber == 2) {
+            background = new ImageIcon("data/hell.png").getImage();
+        } else if (Game.levelNumber == 3) {
+            background = new ImageIcon("data/swamp.png").getImage();
+        }
     }
 
     @Override

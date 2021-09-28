@@ -11,4 +11,21 @@ public class Door extends StaticBody {
         super(level, doorShape);
         addImage(doorImage);
     }
+
+    /** INNER CLASSES */
+
+    public static class DoorEncounter implements CollisionListener {
+        private Game game;
+
+        public DoorEncounter(Game game) {
+            this.game = game;
+        }
+
+        @Override
+        public void collide(CollisionEvent collisionEvent) {
+            if (collisionEvent.getOtherBody() instanceof Door) {
+                game.goToNextLevel();
+            }
+        }
+    }
 }

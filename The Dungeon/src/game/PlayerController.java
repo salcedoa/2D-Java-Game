@@ -33,6 +33,11 @@ public class PlayerController implements KeyListener, ActionListener {
         isBlocking = false;
     }
 
+    // this method updates the sprite being controlled after a level is changed
+    public void updatePlayer(Player player) {
+        this.player = player;
+    }
+
     // The 3rd parameter describes the distance away from the main body that the sensor will be
     private static final Shape swordRight = new BoxShape(0.5f,1, new Vec2(3,1));
     private static final Shape swordLeft = new BoxShape(0.5f,1, new Vec2(-3,1));
@@ -65,6 +70,7 @@ public class PlayerController implements KeyListener, ActionListener {
                 break;
             case 'p':
                 // debug key
+                System.out.println(player.getHealth());
         }
     }
 

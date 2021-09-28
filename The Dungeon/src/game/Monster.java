@@ -52,7 +52,7 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
         if (event.getOtherBody() instanceof Player) {
             player = (Player) event.getOtherBody();
             player.stopWalking(); // to not have the player push against the knockback
-            // event.getOtherBody.addHealth(-10);
+            player.addHealth(-10);
             player.setLinearVelocity(new Vec2(directionVec * 10,8));
         } else if (event.getOtherBody() instanceof Monster) {
             // slight knockback effect to reduce the chance of the monsters blocking eachother's movement

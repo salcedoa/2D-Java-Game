@@ -36,6 +36,18 @@ public class Game extends World {
         currentLevel.start();
     }
 
+    public void goToNextLevel() {
+        if (currentLevel instanceof Level1) {
+            currentLevel.stop();
+            currentLevel = new Level2(this);
+            // currentLevel now refers to new level
+            view.setWorld(currentLevel);
+            view.updateBackground();
+            controller.updatePlayer(currentLevel.getPlayer());
+            currentLevel.start();
+        }
+    }
+
     public static void main(String[] args) {
         new Game();
     }
