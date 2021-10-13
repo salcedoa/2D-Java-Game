@@ -18,10 +18,15 @@ public class Game extends World {
     public void mainMenu() {}
 
     public void startGame() {
-        currentLevel = new Level1(this);
+        //currentLevel = new Level1(this);
+        //TODO: change this
+        currentLevel = new Level2(this);
+        levelNumber = 2;
+
         controller = new PlayerController(currentLevel);
 
         view = new GameView(currentLevel);
+        view.updateBackground();
         view.addMouseListener(new GiveFocus(view)); // using the GiveFocus class
         view.addKeyListener(controller);
         JFrame frame = new JFrame("The Dungeon");    // a new window that will be used to look at the game world is created

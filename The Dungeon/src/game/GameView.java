@@ -22,7 +22,7 @@ public class GameView extends UserView {
         if (Game.levelNumber == 1) {
             background = new ImageIcon("data/dungeon.png").getImage();
         } else if (Game.levelNumber == 2) {
-            background = new ImageIcon("data/hell.png").getImage();
+            background = new ImageIcon("data/hell.gif").getImage();
         } else if (Game.levelNumber == 3) {
             background = new ImageIcon("data/swamp.png").getImage();
         }
@@ -30,6 +30,6 @@ public class GameView extends UserView {
 
     @Override
     protected void paintBackground(Graphics2D g){
-        g.drawImage(background, 0, 0, this);
+        g.drawImage(background, -50, -50, this);
     }
 }

@@ -15,13 +15,18 @@ public class Level2 extends GameLevel implements ActionListener {
         super(game);
         Game.levelNumber = 2; // TODO: Refactor levelNumber to just use currentLevel
         maxMonsters = 2;
-        setWinningScore(50); // one enemy = 2
+        setWinningScore(40); // one enemy = 2
         getPlayer().setPosition(new Vec2(-5,-1.5f));
         getPlayer().setHealth(50);
 
-        createStaticBody(30,4,0,-11);      // ground
+        createStaticBody(30,4,0,-12);      // ground
+        createStaticBody(7, 4, 0, -7);    // side raised ground
         createStaticBody(1,15, -20,3);     // left wall
         createStaticBody(1,15, 20,3);      // right wall
+
+        // Demon spawn
+        spawnMonster();
+        spawnMonster();
 
         // Health Bag Spawner
         timer = new Timer(7500, this);
@@ -40,7 +45,8 @@ public class Level2 extends GameLevel implements ActionListener {
             }
         } else if (e.getSource() == timer2) {
             if (getLevelScore() >= getWinningScore()) {
-                spawnDoor();
+                Door door = new Door(this);
+                door.setPosition(new Vec2(1.2f,-0.5f));
                 timer2.stop();
             }
         }

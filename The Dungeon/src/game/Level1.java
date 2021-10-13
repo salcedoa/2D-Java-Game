@@ -46,7 +46,8 @@ public class Level1 extends GameLevel implements ActionListener {
             }
         } else if (e.getSource() == timer2) {
             if (getLevelScore() >= getWinningScore()) {
-                spawnDoor();
+                Door door = new Door(this);
+                door.setPosition(new Vec2(16.5f,3));
                 timer2.stop();
             }
         }

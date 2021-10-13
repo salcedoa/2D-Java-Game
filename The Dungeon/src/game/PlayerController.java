@@ -70,7 +70,7 @@ public class PlayerController implements KeyListener, ActionListener {
                 break;
             case 'p':
                 // debug key
-                System.out.println(player.getHealth());
+                System.out.println(player.getPosition());
         }
     }
 

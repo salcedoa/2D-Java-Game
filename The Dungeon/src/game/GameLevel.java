@@ -1,8 +1,10 @@
 package game;
 
 import city.cs.engine.*;
+import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class GameLevel extends World {
@@ -42,11 +44,21 @@ public abstract class GameLevel extends World {
         player.addCollisionListener(enterDoor);
     }
 
-    // method that handles the creation of static bodies such as platforms
+    // method that handles the creation of static bodies such as platforms and walls
     public void createStaticBody(float width, float height, float xPos, float yPos) {
         Shape objectShape = new BoxShape(width, height);    // shape and dimensions defined
         Body object = new StaticBody(this, objectShape); // body type is defined
         object.setPosition(new Vec2(xPos,yPos));      // setting the position of the shape
+        if (Game.levelNumber == 1) {
+            object.setFillColor(Color.gray);
+            object.setLineColor(Color.gray);
+        } else if (Game.levelNumber == 2) {
+            object.setFillColor(new Color(80, 12, 9));
+            object.setLineColor(new Color(80, 12, 9));
+        } else if (Game.levelNumber == 3) {
+            object.setFillColor(new Color(52, 22, 6));
+            object.setLineColor(new Color(52, 22, 6));
+        }
     }
 
 
@@ -70,16 +82,12 @@ public abstract class GameLevel extends World {
                 Skeleton skeleton = new Skeleton(this);
                 skeleton.setPosition(new Vec2(x, y));
                 monsters.add(skeleton);
+            } else if (Game.levelNumber == 2) {
+                Demon demon = new Demon(this);
+                demon.setPosition(new Vec2(x,y));
+                monsters.add(demon);
             } // TODO: Add spawn instructions for other monsters
         }
-    }
-
-    public void spawnDoor() {
-        System.out.println("Door Spawned!");
-        if (Game.levelNumber == 1) {
-            Door door = new Door(this);
-            door.setPosition(new Vec2(16.5f,3));
-        } // TODO: Add door spawn points for each level
     }
 
     public Player getPlayer(){
