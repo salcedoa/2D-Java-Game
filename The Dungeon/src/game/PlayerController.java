@@ -43,8 +43,8 @@ public class PlayerController implements KeyListener, ActionListener {
     private static final Shape swordLeft = new BoxShape(0.5f,1, new Vec2(-3,1));
 
     // The 3rd parameter describes the distance away from the main body that the sensor will be
-    private static final Shape shieldRight = new BoxShape(0.5f,0.5f, new Vec2(1.5f,0.4f));
-    private static final Shape shieldLeft = new BoxShape(0.5f,0.5f, new Vec2(-1.5f,0.4f));
+    private static final Shape shieldRight = new BoxShape(0.5f,1.2f, new Vec2(1.5f,0.4f));
+    private static final Shape shieldLeft = new BoxShape(0.5f,1.2f, new Vec2(-1.5f,0.4f));
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -103,6 +103,7 @@ public class PlayerController implements KeyListener, ActionListener {
                         shield = player.new ShieldZone(shieldLeft);
                     }
                     shield.addSensorListener(new MonsterHit(level));
+                    shield.addSensorListener(new Fireball.FireballHit());
 
                     // This timer controls the blocking mechanism so that you can't hold the blocking position
                     // After 0.2 seconds, the player will return to idle stance

@@ -94,15 +94,16 @@ public class Demon extends Monster {
                 state = State.REACH_PLAYER;
             }
         }
-        System.out.println(state);/////////////////
         updateBehaviour();
     }
 
     public void updateBehaviour() {
         switch (state) {
             case SHOOT:
-                shoot();
-                // TODO: Add shooting mechanism
+                if (!shooting) {
+                    shoot();
+                    Fireball fireball = new Fireball(level, this);
+                }
                 break;
             case RETREAT:
                 // Preconditions: Player is less than 6 x-coords and less than 5 y-coords away from Demon
