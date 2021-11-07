@@ -3,7 +3,11 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-public class Demon extends Monster {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Demon extends Monster implements ActionListener {
 
     private enum State {
         STAND_STILL, SHOOT, REACH_PLAYER, RETREAT
@@ -19,6 +23,8 @@ public class Demon extends Monster {
     private Demon.State state;
     private Boolean hit;
     private Boolean shooting;
+
+    private Timer timer;
 
     private static final float WALKING_SPEED = 5;
     private static final float range = 6;
@@ -45,7 +51,6 @@ public class Demon extends Monster {
         removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(this, normal,1.4f,0,new Vec2(0, 0));
         hit = false;
-        shooting = false;
     }
 
     @Override
@@ -53,7 +58,6 @@ public class Demon extends Monster {
         removeAttachedImage(currentAnimation);
         currentAnimation = new AttachedImage(this, death,1.4f,0,new Vec2(0, 0));
         hit = true;
-        shooting = false;
     }
 
     public void shoot() {
@@ -66,6 +70,8 @@ public class Demon extends Monster {
         }
         shooting = true;
         hit = false;
+
+        timer = new Timer(200, this);
     }
 
     @Override
@@ -135,5 +141,11 @@ public class Demon extends Monster {
     @Override
     public void postStep(StepEvent stepEvent) {}
 
-    /** INNER CLASSES */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (shooting) {
+            shooting = false;
+            normal();
+        }
+    }
 }
