@@ -86,7 +86,10 @@ public abstract class GameLevel extends World {
                 Demon demon = new Demon(this);
                 demon.setPosition(new Vec2(x,y));
                 monsters.add(demon);
-            } // TODO: Add spawn instructions for other monsters
+            } else if (Game.levelNumber == 3) {
+                Frog frog = new Frog(this);
+                monsters.add(frog);
+            }
         }
     }
 

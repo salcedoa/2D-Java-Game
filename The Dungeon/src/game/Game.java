@@ -20,8 +20,8 @@ public class Game extends World {
     public void startGame() {
         //currentLevel = new Level1(this);
         //TODO: change this
-        currentLevel = new Level2(this);
-        levelNumber = 2;
+        currentLevel = new Level3(this);
+        levelNumber = 3;
 
         controller = new PlayerController(currentLevel);
 
