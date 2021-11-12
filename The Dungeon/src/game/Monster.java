@@ -43,7 +43,7 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
         destroy();
         level.getMonsters().remove(this);
 
-        System.out.println(level.getLevelScore());//////////
+        System.out.println(level.getLevelScore());//TODO: REMOVE
     }
 
     @Override
@@ -52,6 +52,7 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
         if (event.getOtherBody() instanceof Player) {
             player = (Player) event.getOtherBody();
             player.stopWalking(); // to not have the player push against the knockback
+            player.takeDamage(player);//TODO: turn back to normal
             player.addHealth(-10);
             player.setLinearVelocity(new Vec2(directionVec * 10,8));
         } else if (event.getOtherBody() instanceof Monster) {

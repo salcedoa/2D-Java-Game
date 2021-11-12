@@ -3,7 +3,12 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-public class Player extends Walker {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Player extends Walker implements ActionListener {
+
     private static final Shape playerShape = new PolygonShape(
             -0.11f,2.48f,
             1.14f,0.49f,
@@ -21,8 +26,9 @@ public class Player extends Walker {
     private static final BodyImage heal = new BodyImage("data/player/heal.png", 4);
     private static AttachedImage currentAnimation;
 
-
+    private Timer timer;
     private int health;
+    private boolean hit;
 
     public void setHealth(int health) {
         this.health = health;
@@ -37,6 +43,7 @@ public class Player extends Walker {
     // constructor
     public Player(World world) {
         super(world, playerShape);
+        hit = false;
         currentAnimation = new AttachedImage(this, idle,1.4f,0,new Vec2(0, 0.22f));
         setGravityScale(2);
     }
@@ -95,9 +102,29 @@ public class Player extends Walker {
         currentAnimation.flipHorizontal();
     }
 
-    public static void takeDamage(Player player){
-        player.removeAttachedImage(currentAnimation);
-        currentAnimation = new AttachedImage(player, hurt, 1.4f,0, new Vec2(-0.5f,0.9f));
+    public void takeDamage(Player player){
+        if (currentAnimation.isFlippedHorizontal()){
+            player.removeAttachedImage(currentAnimation);
+            currentAnimation = new AttachedImage(player, hurt, 1.4f,0, new Vec2(0,0.2f));
+            player.turn(player);
+        } else {
+            player.removeAttachedImage(currentAnimation);
+            currentAnimation = new AttachedImage(player, hurt, 1.4f,0, new Vec2(0,0.2f));
+        }
+
+        hit = true;
+        timer = new Timer(150, this);
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (hit) {
+            walkingAnimation(this);
+            hit = false;
+        }
+
     }
 
 
