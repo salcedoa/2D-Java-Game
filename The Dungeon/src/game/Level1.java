@@ -16,6 +16,7 @@ public class Level1 extends GameLevel implements ActionListener {
         super(game);
         Game.levelNumber = 1;
         maxMonsters = 2;
+        setLevelScore(0);
         setWinningScore(50); // one enemy = 2
         getPlayer().setPosition(new Vec2(-5,-1.5f));
         getPlayer().setHealth(50);
@@ -48,6 +49,7 @@ public class Level1 extends GameLevel implements ActionListener {
             if (getLevelScore() >= getWinningScore()) {
                 Door door = new Door(this);
                 door.setPosition(new Vec2(16.5f,3));
+                timer.stop();
                 timer2.stop();
             }
         }

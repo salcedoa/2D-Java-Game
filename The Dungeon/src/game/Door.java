@@ -17,7 +17,7 @@ public class Door extends StaticBody {
     public static class DoorEncounter implements CollisionListener {
         private Game game;
 
-        public DoorEncounter(Game game) {
+        public DoorEncounter(Player player, Game game) {
             this.game = game;
         }
 

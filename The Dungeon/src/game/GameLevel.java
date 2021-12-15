@@ -40,7 +40,7 @@ public abstract class GameLevel extends World {
         bagSpawned = false;
         BagPickup pickup = new BagPickup(player, this);
         player.addCollisionListener(pickup);
-        Door.DoorEncounter enterDoor = new Door.DoorEncounter(game);
+        Door.DoorEncounter enterDoor = new Door.DoorEncounter(player, game);
         player.addCollisionListener(enterDoor);
     }
 

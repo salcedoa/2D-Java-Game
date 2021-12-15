@@ -18,10 +18,8 @@ public class Game extends World {
     public void mainMenu() {}
 
     public void startGame() {
-        //currentLevel = new Level1(this);
-        //TODO: change this
-        currentLevel = new Level3(this);
-        levelNumber = 3;
+        currentLevel = new Level1(this);
+        levelNumber = 1;
 
         controller = new PlayerController(currentLevel);
 
@@ -48,9 +46,16 @@ public class Game extends World {
             // currentLevel now refers to new level
             view.setWorld(currentLevel);
             view.updateBackground();
-            controller.updatePlayer(currentLevel.getPlayer());
+            controller.updateLevel(currentLevel);
             currentLevel.start();
-        }
+        } else if (currentLevel instanceof Level2) {
+            currentLevel.stop();
+            currentLevel = new Level3(this);
+            view.setWorld(currentLevel);
+            view.updateBackground();
+            controller.updateLevel(currentLevel);
+            currentLevel.start();
+        } // TODO: create winning screen or go back to menu
     }
 
     public static void main(String[] args) {

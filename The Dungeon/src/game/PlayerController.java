@@ -34,8 +34,9 @@ public class PlayerController implements KeyListener, ActionListener {
     }
 
     // this method updates the sprite being controlled after a level is changed
-    public void updatePlayer(Player player) {
-        this.player = player;
+    public void updateLevel(GameLevel level) {
+        this.level = level;
+        this.player = level.getPlayer();
     }
 
     // The 3rd parameter describes the distance away from the main body that the sensor will be

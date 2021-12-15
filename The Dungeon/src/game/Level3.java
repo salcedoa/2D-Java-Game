@@ -16,6 +16,7 @@ public class Level3 extends GameLevel implements ActionListener {
 
         Game.levelNumber = 3; // TODO: Refactor levelNumber to just use currentLevel
         maxMonsters = 5;
+        setLevelScore(0);
         setWinningScore(70); // one enemy = 2
         getPlayer().setPosition(new Vec2(-5,-1.5f));
         getPlayer().setHealth(50);
