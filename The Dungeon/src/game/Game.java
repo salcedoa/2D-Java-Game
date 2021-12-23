@@ -23,7 +23,7 @@ public class Game extends World {
 
         controller = new PlayerController(currentLevel);
 
-        view = new GameView(currentLevel);
+        view = new GameView(currentLevel, this);
         view.updateBackground();
         view.addMouseListener(new GiveFocus(view)); // using the GiveFocus class
         view.addKeyListener(controller);
@@ -39,9 +39,18 @@ public class Game extends World {
         currentLevel.start();
     }
 
+    public GameLevel getLevel() { return currentLevel; }
+
+    // keeps the value of the sum of levelScore from previous levels
+    private int cachedScore = 0;
+    public int getCachedScore() { return cachedScore; }
+    public void addToCachedScore(int score) { this.cachedScore += score; }
+
     public void goToNextLevel() {
+        addToCachedScore(currentLevel.getLevelScore());
+        currentLevel.setLevelScore(0);
+        currentLevel.stop();
         if (currentLevel instanceof Level1) {
-            currentLevel.stop();
             currentLevel = new Level2(this);
             // currentLevel now refers to new level
             view.setWorld(currentLevel);
@@ -49,13 +58,12 @@ public class Game extends World {
             controller.updateLevel(currentLevel);
             currentLevel.start();
         } else if (currentLevel instanceof Level2) {
-            currentLevel.stop();
             currentLevel = new Level3(this);
             view.setWorld(currentLevel);
             view.updateBackground();
             controller.updateLevel(currentLevel);
             currentLevel.start();
-        } // TODO: create winning screen or go back to menu
+        } // TODO: create winning screen or go back to menu OR loop back to level 1
     }
 
     public static void main(String[] args) {
