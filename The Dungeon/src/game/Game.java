@@ -3,6 +3,7 @@ package game;
 import city.cs.engine.World;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Game extends World {
     private GameLevel currentLevel;
@@ -28,7 +29,9 @@ public class Game extends World {
         view.addMouseListener(new GiveFocus(view)); // using the GiveFocus class
         view.addKeyListener(controller);
         JFrame frame = new JFrame("The Dungeon");    // a new window that will be used to look at the game world is created
+        sideMenu controlPanel = new sideMenu(this);
         frame.add(view);
+        frame.add(controlPanel, BorderLayout.SOUTH);
         //frame.setGridResolution(1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);

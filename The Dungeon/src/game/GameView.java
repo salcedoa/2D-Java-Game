@@ -18,7 +18,7 @@ public class GameView extends UserView {
         this.game = game;
 
         // DEBUG VIEW - overrides normal view
-        JFrame debugView = new DebugViewer(w, 800, 500);
+        //JFrame debugView = new DebugViewer(w, 800, 500);
 
         background = new ImageIcon("data/dungeon.png").getImage();
     }
