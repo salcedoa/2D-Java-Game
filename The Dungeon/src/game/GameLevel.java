@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public abstract class GameLevel extends World {
     private Player player;
 
+    private Game game;
+    public Game getGame() { return game; }
+
     private int levelScore;
     public int getLevelScore() { return levelScore; }
     public void setLevelScore(int levelScore) { this.levelScore = levelScore; }
@@ -36,6 +39,7 @@ public abstract class GameLevel extends World {
 
     public GameLevel (Game game){
         player = new Player(this);
+        this.game = game;
         levelScore = 0;
         bagSpawned = false;
         BagPickup pickup = new BagPickup(player, this);

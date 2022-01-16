@@ -29,6 +29,7 @@ public class Player extends Walker implements ActionListener {
     private Timer timer;
     private int health;
     private boolean hit;
+    private GameLevel level;
 
     public void setHealth(int health) {
         this.health = health;
@@ -41,8 +42,9 @@ public class Player extends Walker implements ActionListener {
     }
 
     // constructor
-    public Player(World world) {
-        super(world, playerShape);
+    public Player(GameLevel level) {
+        super(level, playerShape);
+        this.level = level;
         hit = false;
         currentAnimation = new AttachedImage(this, idle,1.4f,0,new Vec2(0, 0.22f));
         setGravityScale(2);
@@ -125,6 +127,9 @@ public class Player extends Walker implements ActionListener {
             hit = false;
         }
 
+        if (health < 1) {
+            level.getGame().endGame();
+        }
     }
 
 

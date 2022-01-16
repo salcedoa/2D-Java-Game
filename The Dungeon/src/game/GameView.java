@@ -11,8 +11,7 @@ import java.awt.*;
 public class GameView extends UserView {
     private Image background;
     private Game game;
-    int health;
-    int score;
+    private int health, score, highscore;
     public GameView(World w, Game game){
         super(w, 800, 500); // the window size is set
         this.game = game;
@@ -22,6 +21,8 @@ public class GameView extends UserView {
 
         background = new ImageIcon("data/dungeon.png").getImage();
     }
+
+    int getScore() { return score; }
 
     public void updateBackground() {
         if (Game.levelNumber == 1) {
@@ -42,6 +43,7 @@ public class GameView extends UserView {
     protected void paintForeground(Graphics2D g) {
         health = game.getLevel().getPlayer().getHealth();
         score = game.getCachedScore() + game.getLevel().getLevelScore();
+        highscore = game.getHighScore();
 
         // showing player health on screen
         g.setColor(Color.WHITE);
@@ -49,6 +51,13 @@ public class GameView extends UserView {
         g.drawString("Health: " + health, 20, 450);
 
         // showing total score on screen
-        g.drawString("Score: " + score, getWidth() - 200, 450);
+        g.drawString("Score: " + score, getWidth() - 200, 440);
+
+        // showing player's high score
+        if (highscore > score) {
+            g.drawString("High Score: " + highscore, getWidth() - 200, 480);
+        } else {
+            g.drawString("High Score: " + score, getWidth() - 200, 480);
+        }
     }
 }
