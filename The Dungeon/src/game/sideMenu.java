@@ -11,9 +11,17 @@ public class sideMenu extends JPanel {
         // initialising components
         JButton pauseButton = new JButton("Pause");
         JButton mainMenuButton = new JButton("Main Menu");
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = new JButton("Exit");
 
         // button functions
+        mainMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.endGame();
+                game.getCl().show(game.getContainerPanel(),"menu");
+            }
+        });
+
         pauseButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {

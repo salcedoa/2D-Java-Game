@@ -16,12 +16,39 @@ public class Game extends World {
     private GameView view;
 
     private PlayerController controller;
+    public String gameVersion = "v.1.0.0";
+
+    private JFrame frame = new JFrame("The Dungeon" + " - " + gameVersion);    // a new window that will be used to look at the game world is created
+
+    private JPanel containerPanel = new JPanel(); // main panel that will hold the menu and game screens
+    public JPanel getContainerPanel() { return containerPanel; }
+
+    private CardLayout cl = new CardLayout();
+    public CardLayout getCl() { return cl; }
+
+    JPanel gamePanel = new JPanel();
 
     public Game() {
-        startGame();
-    }
+        containerPanel.setLayout(cl); // layout set as card layout
 
-    public void mainMenu() {}
+        //menu.setBackground(Color.darkGray);
+        //menu.add(new Menu(this));
+
+        // both cards are added to the container panel with corresponding identifiers
+        containerPanel.add(new Menu(this), "menu");
+        containerPanel.add(gamePanel, "game");
+        // first card shown when the application is run
+        cl.show(containerPanel, "menu");
+
+        //frame.setGridResolution(1);
+        frame.setPreferredSize(new Dimension(800,573));
+        frame.add(containerPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
     public void startGame() {
         currentLevel = new Level1(this);
@@ -33,16 +60,10 @@ public class Game extends World {
         view.updateBackground();
         view.addMouseListener(new GiveFocus(view)); // using the GiveFocus class
         view.addKeyListener(controller);
-        JFrame frame = new JFrame("The Dungeon");    // a new window that will be used to look at the game world is created
+
         sideMenu controlPanel = new sideMenu(this);
-        frame.add(view);
-        frame.add(controlPanel, BorderLayout.SOUTH);
-        //frame.setGridResolution(1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationByPlatform(true);
-        frame.setResizable(false);
-        frame.pack();
-        frame.setVisible(true);
+        gamePanel.add(view);
+        gamePanel.add(controlPanel, BorderLayout.SOUTH);
 
         currentLevel.start();
     }
@@ -61,23 +82,15 @@ public class Game extends World {
         if (currentLevel instanceof Level1) {
             currentLevel = new Level2(this);
             // currentLevel now refers to new level
-            view.setWorld(currentLevel);
-            view.updateBackground();
-            controller.updateLevel(currentLevel);
-            currentLevel.start();
         } else if (currentLevel instanceof Level2) {
             currentLevel = new Level3(this);
-            view.setWorld(currentLevel);
-            view.updateBackground();
-            controller.updateLevel(currentLevel);
-            currentLevel.start();
         } else if (currentLevel instanceof Level3) {
             currentLevel = new Level1(this);
-            view.setWorld(currentLevel);
-            view.updateBackground();
-            controller.updateLevel(currentLevel);
-            currentLevel.start();
         }
+        view.setWorld(currentLevel);
+        view.updateBackground();
+        controller.updateLevel(currentLevel);
+        currentLevel.start();
     }
 
     // called if the player's health is lower than 1
@@ -95,7 +108,9 @@ public class Game extends World {
                 e.printStackTrace();
             }
         }
-        System.exit(0); // TODO: return to main menu instead close window
+        currentLevel.stop();
+        gamePanel.removeAll();  // panel is cleared so that it can be loaded again without problem
+        cl.show(containerPanel,"menu");
     }
 
     public int getHighScore() {

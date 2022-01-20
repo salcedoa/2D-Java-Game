@@ -13,7 +13,7 @@ public class Level2 extends GameLevel implements ActionListener {
 
     public Level2(Game game) {
         super(game);
-        Game.levelNumber = 2; // TODO: Refactor levelNumber to just use currentLevel
+        Game.levelNumber = 2;
         maxMonsters = 2;
         setLevelScore(0);
         setWinningScore(24); // one enemy = 2

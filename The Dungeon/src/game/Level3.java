@@ -14,7 +14,7 @@ public class Level3 extends GameLevel implements ActionListener {
     public Level3(Game game) {
         super(game);
 
-        Game.levelNumber = 3; // TODO: Refactor levelNumber to just use currentLevel
+        Game.levelNumber = 3;
         maxMonsters = 5;
         setLevelScore(0);
         setWinningScore(70); // one enemy = 2
