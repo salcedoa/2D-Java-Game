@@ -31,9 +31,6 @@ public class Game extends World {
     public Game() {
         containerPanel.setLayout(cl); // layout set as card layout
 
-        //menu.setBackground(Color.darkGray);
-        //menu.add(new Menu(this));
-
         // both cards are added to the container panel with corresponding identifiers
         containerPanel.add(new Menu(this), "menu");
         containerPanel.add(gamePanel, "game");

@@ -34,6 +34,7 @@ public class Fireball extends DynamicBody implements CollisionListener {
         if (collisionEvent.getOtherBody() instanceof Player) {
             destroy();
             player.stopWalking(); // to not have the player push against the knockback
+            player.takeDamage(player);
             player.addHealth(-2);
             player.setLinearVelocity(new Vec2(directionVec * 10,8));
         } else if (collisionEvent.getOtherBody() instanceof Monster) {
