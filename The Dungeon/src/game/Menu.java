@@ -14,6 +14,15 @@ public class Menu extends JPanel {
     private Game game;
     private ImageIcon bgImage = new ImageIcon("data/dungeon.png");
 
+    // initialising components
+    // mainButtons
+    private static final JLabel title = new JLabel(new ImageIcon("data/title.png"));
+    private static final JLabel playerImage = new JLabel(new ImageIcon("data/player/idle.png"));
+    private static final JButton startButton = new JButton("Start");
+    private static final JButton closeButton = new JButton("Exit");
+
+    private static final JLabel watermark = new JLabel("salcedoa.github.io");
+
     // to add a background image, paintComponent must be overidden
     @Override
     protected void paintComponent(Graphics g){
@@ -26,14 +35,8 @@ public class Menu extends JPanel {
 
         // initialising components
         // mainButtons
-        ImageIcon icon = new ImageIcon("data/title.png");
-        ImageIcon playerIcon = new ImageIcon("data/player/idle.png");
-        JLabel title = new JLabel(icon);
-        JLabel playerImage = new JLabel(playerIcon);
         playerImage.setMaximumSize(new Dimension(60,100));
-        JButton startButton = new JButton("Start");
         startButton.setMaximumSize(new Dimension(90,40)); // sizing the start button
-        JButton closeButton = new JButton("Exit");
 
         // other labels
         JLabel menuScore = new JLabel("High Score: " + String.valueOf(game.getHighScore()));
@@ -44,7 +47,6 @@ public class Menu extends JPanel {
         version.setFont(new Font("Courier New", Font.BOLD, 16));
         version.setForeground(Color.WHITE);
 
-        JLabel watermark = new JLabel("salcedoa.github.io");
         watermark.setFont(new Font("Courier New", Font.BOLD, 16));
         watermark.setForeground(Color.WHITE);
         watermark.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // cursor becomes hand when hovered over

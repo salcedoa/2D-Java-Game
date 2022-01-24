@@ -3,9 +3,13 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class Demon extends Monster implements ActionListener {
 
@@ -19,6 +23,16 @@ public class Demon extends Monster implements ActionListener {
     private static final BodyImage shoot = new BodyImage("data/demon/shoot.png", 3.5f);
     private static final BodyImage death = new BodyImage("data/demon/hurt.png", 3.5f);
     private AttachedImage currentAnimation;
+
+    // sounds loaded using static code so that it is loaded only once instead of whenever an object is created
+    private static SoundClip fireballSound;
+    static {
+        try {
+            fireballSound = new SoundClip("data/sound/238283__meroleroman7__8-bit-noise.wav");
+        } catch (UnsupportedAudioFileException | IOException| LineUnavailableException e) {
+            System.out.println(e);
+        }
+    }
 
     private Demon.State state;
     private Boolean hit;
@@ -68,6 +82,7 @@ public class Demon extends Monster implements ActionListener {
             currentAnimation = new AttachedImage(this, shoot, 1.4f, 0, new Vec2(0, 0));
             currentAnimation.flipHorizontal();
         }
+        fireballSound.play();
         shooting = true;
         hit = false;
 

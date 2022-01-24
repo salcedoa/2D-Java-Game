@@ -3,9 +3,12 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Player extends Walker implements ActionListener {
 
@@ -25,6 +28,18 @@ public class Player extends Walker implements ActionListener {
     private static final BodyImage hurt = new BodyImage("data/player/hurt.png", 4);
     private static final BodyImage heal = new BodyImage("data/player/heal.png", 4);
     private static AttachedImage currentAnimation;
+
+    // sounds
+    private static SoundClip healSound;
+    private static SoundClip hurtSound;
+    static {
+        try {
+            healSound = new SoundClip("data/sound/171583__leszek-szary__3-up-fast-1.wav");
+            hurtSound = new SoundClip("data/sound/442903__qubodup__slash.wav");
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println(e);
+        }
+    }
 
     private Timer timer;
     private int health;
@@ -97,6 +112,7 @@ public class Player extends Walker implements ActionListener {
     // heal
     public static void healCostume(Player player) {
         player.removeAttachedImage(currentAnimation);
+        healSound.play();
         currentAnimation = new AttachedImage(player, heal, 1.4f, 0, new Vec2(0,0.22f));
     }
 
@@ -114,6 +130,7 @@ public class Player extends Walker implements ActionListener {
             currentAnimation = new AttachedImage(player, hurt, 1.4f,0, new Vec2(0,0.2f));
         }
 
+        hurtSound.play();
         hit = true;
         timer = new Timer(150, this);
         timer.setRepeats(false);

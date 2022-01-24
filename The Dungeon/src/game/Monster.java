@@ -3,9 +3,12 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public abstract class Monster extends Walker implements CollisionListener, StepListener, ActionListener {
 
@@ -14,6 +17,15 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
     private Timer timer;
     protected Boolean dead;
     private float directionVec;
+
+    private static SoundClip monsterDeathSound;
+    static {
+        try {
+            monsterDeathSound = new SoundClip("data/sound/391668__jeckkech__hit.wav");
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println(e);
+        }
+    }
 
     // All monsters need a walking, blocked and death animation
     public abstract void normal();
@@ -39,7 +51,7 @@ public abstract class Monster extends Walker implements CollisionListener, StepL
     public void die() {
         // increase kill count by 1
         level.setLevelScore(level.getLevelScore() + 1);
-
+        monsterDeathSound.play();
         destroy();
         level.getMonsters().remove(this);
     }
