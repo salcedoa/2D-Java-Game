@@ -1,0 +1,9 @@
+# ignore all compiled java files
+*.class
+
+# ignore system files
+.DS_Store
+settings.json
+
+# ignore high_score text file
+The Dungeon/data/high_scores.txt

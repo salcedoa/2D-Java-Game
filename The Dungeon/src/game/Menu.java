@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 
 public class Menu extends JPanel {
     private Game game;
-    private ImageIcon bgImage = new ImageIcon("data/dungeon.png");
+    private ImageIcon bgImage = new ImageIcon("./data/dungeon.png");
 
     // initialising components
     // mainButtons
