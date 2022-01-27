@@ -22,6 +22,7 @@ public class Game extends World {
 
     private JPanel containerPanel = new JPanel(); // main panel that will hold the menu and game screens
     public JPanel getContainerPanel() { return containerPanel; }
+    private Menu menu = new Menu(this);
 
     private CardLayout cl = new CardLayout();
     public CardLayout getCl() { return cl; }
@@ -32,7 +33,7 @@ public class Game extends World {
         containerPanel.setLayout(cl); // layout set as card layout
 
         // both cards are added to the container panel with corresponding identifiers
-        containerPanel.add(new Menu(this), "menu");
+        containerPanel.add(menu, "menu");
         containerPanel.add(gamePanel, "game");
         // first card shown when the application is run
         cl.show(containerPanel, "menu");
@@ -107,6 +108,7 @@ public class Game extends World {
         }
         currentLevel.stop();
         gamePanel.removeAll();  // panel is cleared so that it can be loaded again without problem
+        menu.getMenuScore().setText("High Score: " + String.valueOf(getHighScore()));
         cl.show(containerPanel,"menu");
     }
 
@@ -120,8 +122,6 @@ public class Game extends World {
                 return 0; // if the file is empty then no high score has been set
             }
         } catch (FileNotFoundException e) {
-            System.out.println("high_scores.txt does not exist");
-            e.printStackTrace();
             return 0;
         }
     }

@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 
 public class Menu extends JPanel {
     private Game game;
-    private ImageIcon bgImage = new ImageIcon("./data/dungeon.png");
+    private ImageIcon bgImage = new ImageIcon("data/dungeon.png");
 
     // initialising components
     // mainButtons
@@ -20,6 +20,10 @@ public class Menu extends JPanel {
     private static final JLabel playerImage = new JLabel(new ImageIcon("data/player/idle.png"));
     private static final JButton startButton = new JButton("Start");
     private static final JButton closeButton = new JButton("Exit");
+    
+    // set to an empty string so that setString() can be called in constructor
+    private static JLabel menuScore = new JLabel("");
+    public JLabel getMenuScore() { return menuScore; }
 
     private static final JLabel watermark = new JLabel("salcedoa.github.io");
 
@@ -39,7 +43,7 @@ public class Menu extends JPanel {
         startButton.setMaximumSize(new Dimension(90,40)); // sizing the start button
 
         // other labels
-        JLabel menuScore = new JLabel("High Score: " + String.valueOf(game.getHighScore()));
+        menuScore.setText("High Score: " + String.valueOf(game.getHighScore()));
         menuScore.setFont(new Font("Courier New", Font.BOLD, 21));
         menuScore.setForeground(Color.WHITE);
 
