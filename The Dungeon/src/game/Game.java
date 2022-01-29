@@ -51,7 +51,8 @@ public class Game extends World {
     public void startGame() {
         currentLevel = new Level1(this);
         levelNumber = 1;
-
+        cachedScore = 0;
+        
         controller = new PlayerController(currentLevel);
 
         view = new GameView(currentLevel, this);
